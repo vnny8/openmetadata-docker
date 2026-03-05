@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Iniciando ambiente do TCC (Versão Docker Nativo)..."
+echo "🚀 Iniciando ambiente do TCC..."
 
 # 1. Configurações de Sistema e Memória
 # Para o Postgres local do Ubuntu para liberar a porta 5432
@@ -28,7 +28,7 @@ if [ ! "$(sudo docker ps -a -q -f name=postgres-tcc)" ]; then
       -v pgdata_tcc:/var/lib/postgresql/data \
       postgres:16
 else
-    echo "📦 Iniciando container existente postgres-tcc..."
+    echo "📦 Iniciando container postgres-tcc..."
     sudo docker start postgres-tcc
 fi
 
@@ -53,9 +53,9 @@ echo "🐳 Subindo OpenMetadata e Ingestão..."
 sudo docker compose -f docker-compose-postgres.yml up -d
 
 # 6. Conecta o banco de estudo à rede do OpenMetadata
-# Isso permite que o OpenMetadata 'enxergue' o seu postgres-tcc
+# Isso permite que o OpenMetadata 'enxergue' o postgres-tcc
 sudo docker network connect openmetadata-docker_app_net postgres-tcc 2>/dev/null || true
 
 echo "---"
-echo "✅ Ambiente pronto! Seus dados foram preservados no volume pgdata_tcc."
+echo "✅ Ambiente pronto!"
 echo "🔗 Acesse: http://localhost:8585"
